@@ -1,0 +1,6 @@
+{
+  "name": "Science Lab Data Plotter & Reflection Assistant",
+  "description": "Plot experimental science lab data with curve fitting, statistical regression, residual analysis, error bars, and laboratory report exports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
