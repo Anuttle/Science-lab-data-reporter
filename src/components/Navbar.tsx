@@ -6,6 +6,8 @@ import {
   PlusCircle,
   HelpCircle,
   Trash2,
+  Download,
+  Code2,
 } from "lucide-react";
 
 interface NavbarProps {
@@ -23,6 +25,26 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenHelp,
   pointCount,
 }) => {
+  const handleDownloadSingleFile = async () => {
+    try {
+      const resp = await fetch("./standalone.html");
+      if (resp.ok) {
+        const text = await resp.text();
+        const blob = new Blob([text], { type: "text/html" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "index.html";
+        a.click();
+        URL.revokeObjectURL(url);
+      } else {
+        window.open("./standalone.html", "_blank");
+      }
+    } catch (e) {
+      window.open("./standalone.html", "_blank");
+    }
+  };
+
   return (
     <header
       id="app-navbar"
@@ -76,8 +98,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </div>
 
-        {/* Right: Lab Report & Help */}
+        {/* Right: Actions */}
         <div className="flex items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            id="download-single-file-btn"
+            onClick={handleDownloadSingleFile}
+            title="Download single self-contained index.html for static GitHub Pages"
+            className="hidden md:flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 transition-all shadow-sm"
+          >
+            <Code2 className="w-4 h-4 text-indigo-400" />
+            <span>Single-File HTML</span>
+          </button>
+
           <button
             type="button"
             id="open-report-btn"
